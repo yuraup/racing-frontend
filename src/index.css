@@ -1,0 +1,132 @@
+@import 'tailwindcss';
+
+/* 테마 */
+@theme {
+  /* 컬러 */
+  --color-ink: #434343;
+  --color-pink: #f184ad;
+  --color-deep: #ff367c;
+  --color-neon: #fff64b;
+
+  /* 기본 배경/카드/텍스트 색 */
+  --color-bg: #fff;
+  --color-card: #fff;
+  --color-text: #f7f7f7;
+
+  /* Tailwind 유틸용 폰트 */
+  --font-basic: 'DNF Forged Blade', system-ui, sans-serif;
+  --font-pixel: 'ThinDungGeunMo', system-ui, monospace;
+  --font-maple: 'Maplestory', system-ui, -apple-system, sans-serif;
+}
+
+/* 폰트 */
+/* DNF Forged Blade */
+@font-face {
+  font-family: 'DNF Forged Blade';
+  src: url('/fonts/DNFForgedBlade-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DNF Forged Blade';
+  src: url('/fonts/DNFForgedBlade-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DNF Forged Blade';
+  src: url('/fonts/DNFForgedBlade-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ThinDungGeunMo */
+@font-face {
+  font-family: 'ThinDungGeunMo';
+  src: url('/fonts/ThinDungGeunMo.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Maplestory  */
+@font-face {
+  font-family: 'Maplestory';
+  src: url('/fonts/Maplestory Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Maplestory';
+  src: url('/fonts/Maplestory Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ───────── 레이아웃 공통 ───────── */
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  overflow: hidden;
+}
+
+/* 데스크톱 프레임 사이즈 */
+:root {
+  --frame-w: 390px;
+  --frame-h: 844px;
+}
+
+/* 모바일 레이아웃 */
+.app-shell {
+  position: relative;
+  width: 100vw;
+  height: 100dvh; /* iOS Safari 대응 */
+  min-height: 100vh; /* 구형 브라우저 fallback */
+  background: var(--color-card);
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
+
+  /* 노치/홈바 대응 */
+  padding-top: max(env(safe-area-inset-top), 0px);
+  padding-right: max(env(safe-area-inset-right), 0px);
+  padding-bottom: max(env(safe-area-inset-bottom), 0px);
+  padding-left: max(env(safe-area-inset-left), 0px);
+}
+
+/* 데스크톱 레이아웃 */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    display: grid;
+    place-items: center;
+  }
+
+  .app-shell {
+    width: var(--frame-w);
+    height: var(--frame-h);
+    border-radius: 1rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    transform-origin: top center;
+    padding: 0;
+  }
+
+  @supports (height: 100dvh) {
+    .app-shell {
+      --scale-x: calc(100vw / var(--frame-w));
+      --scale-y: calc(100dvh / var(--frame-h));
+      --scale: min(var(--scale-x), var(--scale-y), 1);
+      transform: scale(var(--scale));
+    }
+  }
+}
