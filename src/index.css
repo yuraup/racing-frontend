@@ -130,3 +130,10 @@ body {
     }
   }
 }
+
+@layer utilities {
+  .hover-text-shadow-pink:hover,
+  .active-text-shadow-pink:active {
+    text-shadow: 1px 1px 20px var(--color-deep);
+  }
+}
