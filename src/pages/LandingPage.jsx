@@ -4,7 +4,7 @@ export const LandingPage = () => {
   const navigate = useNavigate();
   return (
     <div className="flex h-full w-full justify-center">
-      <div className="bg-ink flex h-[844px] w-64 flex-col items-center justify-center gap-4 pb-20">
+      <div className="bg-ink flex h-full w-64 flex-col items-center justify-center gap-4 pb-20">
         <img src="/assets/gimbab.png" alt="삼각김밥" className="h-14 w-14 object-contain" />
         <p className="font-basic text-4xl font-bold text-white">삼각김밥 레이스</p>
         <p className="font-pixel text-xs font-normal text-white">
