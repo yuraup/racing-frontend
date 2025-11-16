@@ -1,0 +1,6 @@
+export const MODAL_STEP = {
+  RANDOM: 'RANDOM',
+  SELECT: 'SELECT',
+  RESULT: 'RESULT',
+  HIDDEN: 'HIDDEN',
+};
