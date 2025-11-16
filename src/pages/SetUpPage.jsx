@@ -107,7 +107,7 @@ export default function SetUpPage() {
             className="font-basic h-12 w-60 rounded-md bg-white text-center text-xs font-medium text-pink-300"
           />
         </div>
-        <Button type="submit" disabled={carName.trim().length === 0}>
+        <Button type="submit" disabled={carName.trim().length === 0} className="h-12 w-60">
           시작하기
         </Button>
       </form>

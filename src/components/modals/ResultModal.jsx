@@ -11,13 +11,13 @@ function ResultModal({ round, selectedCard, result, onComfirm }) {
         onClick={e => e.stopPropagation()}
       >
         <p className="font-basic text-pink text-stroke-white text-2xl font-bold">Round {round}</p>
-        <div className="font-basic mr-16 flex flex-col gap-3 text-xs font-bold">
+        <div className="font-basic mr-10 flex flex-col gap-3 text-xs font-bold">
           <p className="text-deep">내 이름: {selectedCard}</p>
           <p className="text-ink">참치마요짱: 29</p>
           <p className="text-ink">삼김에는국물: 40</p>
         </div>
         <p className="font-basic text-neon text-stroke-navy text-3xl font-bold">{resultLabel}</p>
-        <Button type="button" onClick={onComfirm}>
+        <Button type="button" onClick={onComfirm} className="h-10 w-52">
           확인
         </Button>
       </div>
