@@ -4,6 +4,7 @@
 @theme {
   /* 컬러 */
   --color-ink: #434343;
+  --color-light: #fff8fd;
   --color-pink: #f184ad;
   --color-deep: #ff367c;
   --color-neon: #fff64b;
@@ -135,5 +136,11 @@ body {
   .hover-text-shadow-pink:hover,
   .active-text-shadow-pink:active {
     text-shadow: 1px 1px 20px var(--color-deep);
+  }
+}
+
+@layer utilities {
+  .text-stroke-white {
+    -webkit-text-stroke: 1px white;
   }
 }
