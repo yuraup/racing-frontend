@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import generateRandomCards from '../utils/generateRandomCards';
+import GameCanvas from '../components/game/GameCanvas';
 import RandomModal from '../components/modals/RandomModal';
 import SelectModal from '../components/modals/SelectModal';
 import ResultModal from '../components/modals/ResultModal';
@@ -38,8 +39,8 @@ export default function GamePage() {
   };
 
   return (
-    <div>
-      {modalStep === MODAL_STEP.RANDOM && <RandomModal onNext={handleGoSelect} />}{' '}
+    <div className="flex h-full w-full flex-col">
+      {modalStep === MODAL_STEP.RANDOM && <RandomModal onNext={handleGoSelect} />}
       {modalStep === MODAL_STEP.SELECT && (
         <SelectModal cards={cards} onSelectCard={handleSelectCard} />
       )}
@@ -51,6 +52,7 @@ export default function GamePage() {
           onConfirm={hanldeConfirmResult}
         />
       )}
+      <GameCanvas />
     </div>
   );
 }
