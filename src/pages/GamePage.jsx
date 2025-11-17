@@ -21,11 +21,12 @@ export default function GamePage() {
   const [modalStep, setModalStep] = useState(MODAL_STEP.RANDOM);
 
   const [cards] = useState(() => (config ? generateRandomCards(config.roundNumber) : []));
+  const [usedCards, setUsedCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [roundResult, setRoundResult] = useState(null);
 
-  const carCount = config?.carNumber;
-  const [carProgress, setCarProgress] = useState(() => Array(carCount).fill(0));
+  const totalCars = config?.carNumber + 1;
+  const [carProgress, setCarProgress] = useState(() => Array(totalCars).fill(0));
   const [winnerCarIndex, setWinnerCarIndex] = useState(null);
   const [myWins, setMyWins] = useState(0);
 
@@ -47,7 +48,9 @@ export default function GamePage() {
 
   const handleSelectCard = card => {
     setSelectedCard(card);
-    const winnerIndex = Math.floor(Math.random() * carCount);
+    setUsedCards(prev => [...prev, card]);
+
+    const winnerIndex = Math.floor(Math.random() * totalCars);
     const isPlayerWin = winnerIndex === PLAYER_CAR_INDEX;
     setWinnerCarIndex(winnerIndex);
     setRoundResult(isPlayerWin ? 'WIN' : 'LOSE');
@@ -94,7 +97,12 @@ export default function GamePage() {
       <GameHeader myWins={myWins} />
       {modalStep === MODAL_STEP.RANDOM && <RandomModal onNext={handleGoSelect} />}
       {modalStep === MODAL_STEP.SELECT && (
-        <SelectModal round={currentRound} cards={cards} onSelectCard={handleSelectCard} />
+        <SelectModal
+          round={currentRound}
+          cards={cards}
+          usedCards={usedCards}
+          onSelectCard={handleSelectCard}
+        />
       )}
       {modalStep === MODAL_STEP.RESULT && (
         <ResultModal
