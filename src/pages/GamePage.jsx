@@ -18,6 +18,8 @@ export default function GamePage() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [roundResult, setRoundResult] = useState(null);
 
+  const [myWins, setMyWins] = useState(0);
+
   useEffect(() => {
     if (!config) {
       navigate('/setup');
@@ -37,11 +39,15 @@ export default function GamePage() {
 
   const hanldeConfirmResult = () => {
     setModalStep(MODAL_STEP.HIDDEN);
+
+    if (roundResult === 'WIN') {
+      setMyWins(prev => prev + 1);
+    }
   };
 
   return (
     <div className="flex h-full w-full flex-col">
-      <GameHeader />
+      <GameHeader myWins={myWins} />
       {modalStep === MODAL_STEP.RANDOM && <RandomModal onNext={handleGoSelect} />}
       {modalStep === MODAL_STEP.SELECT && (
         <SelectModal cards={cards} onSelectCard={handleSelectCard} />
