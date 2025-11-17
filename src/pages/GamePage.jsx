@@ -6,6 +6,7 @@ import RandomModal from '../components/modals/RandomModal';
 import SelectModal from '../components/modals/SelectModal';
 import ResultModal from '../components/modals/ResultModal';
 import { MODAL_STEP } from '../constants/modalStep';
+import GameHeader from '../components/game/GameHeader';
 
 export default function GamePage() {
   const location = useLocation();
@@ -40,6 +41,7 @@ export default function GamePage() {
 
   return (
     <div className="flex h-full w-full flex-col">
+      <GameHeader />
       {modalStep === MODAL_STEP.RANDOM && <RandomModal onNext={handleGoSelect} />}
       {modalStep === MODAL_STEP.SELECT && (
         <SelectModal cards={cards} onSelectCard={handleSelectCard} />
