@@ -27,6 +27,7 @@ export default function GamePage() {
 
   const totalCars = config?.carNumber + 1;
   const [carProgress, setCarProgress] = useState(() => Array(totalCars).fill(0));
+  const [animatedProgress, setAnimatedProgress] = useState(() => Array(totalCars).fill(0));
   const [winnerCarIndex, setWinnerCarIndex] = useState(null);
   const [myWins, setMyWins] = useState(0);
 
@@ -67,21 +68,45 @@ export default function GamePage() {
       );
     }
 
+    const duration = 1000;
+    const startTime = performance.now();
+
+    if (winnerCarIndex === null) return;
+
+    const from = animatedProgress[winnerCarIndex];
+    const to = from + 1;
+
+    const animate = now => {
+      const elapsed = now - startTime;
+      const time = Math.min(1, elapsed / duration);
+
+      const eased = time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time;
+
+      setAnimatedProgress(prev =>
+        prev.map((value, index) => (index === winnerCarIndex ? from + (to - from) * eased : value))
+      );
+      if (time < 1) requestAnimationFrame(animate);
+    };
+    requestAnimationFrame(animate);
+
     if (roundResult === 'WIN') {
       setMyWins(prev => prev + 1);
     }
 
     if (currentRound === totalrounds) {
-      navigate('/result', {
-        state: {
-          totalrounds,
-          myWins,
-          carProgress,
-        },
-      });
+      setTimeout(() => {
+        navigate('/result', {
+          state: {
+            totalrounds,
+            myWins,
+            carProgress,
+          },
+        });
+      }, 2000);
 
       return;
     }
+
     setCurrentRound(prev => prev + 1);
     setSelectedCard(null);
     setRoundResult(null);
@@ -113,7 +138,7 @@ export default function GamePage() {
           onConfirm={hanldeConfirmResult}
         />
       )}
-      <GameCanvas carProgress={carProgress} carNames={carNames} />
+      <GameCanvas carProgress={animatedProgress} carNames={carNames} totalRounds={totalrounds} />
     </div>
   );
 }

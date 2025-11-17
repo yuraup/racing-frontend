@@ -2,12 +2,12 @@ import { useCallback } from 'react';
 import useCanvas from '../../hooks/useCanvas';
 import drawCanvas from '../../utils/drawCanvas';
 
-function GameCanvas({ carProgress, carNames }) {
+function GameCanvas({ carProgress, carNames, totalRounds }) {
   const draw = useCallback(
     (canvasElement, canvas2DContext) => {
-      drawCanvas(canvasElement, canvas2DContext, carNames, carProgress);
+      drawCanvas(canvasElement, canvas2DContext, carNames, carProgress, totalRounds);
     },
-    [carProgress, carNames]
+    [carProgress, carNames, totalRounds]
   );
   const canvasRef = useCanvas(draw);
 

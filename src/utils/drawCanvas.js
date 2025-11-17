@@ -10,8 +10,10 @@ import { COLORS } from '../constants/canvas/canvasColors';
  * @param {HTMLCanvasElement} canvasElement - 실제 DOM 캔버스 요소
  * @param {CanvasRenderingContext2D} canvas2DContext - 2D 렌더링 컨텍스트
  * @param {string []} carNames - 각 자동차 이름
+ * @param {number[]} carProgress - 각 자동차의 진행도
+ * @param {number} totalRounds   - 전체 라운드 수
  */
-const drawCanvas = (canvasElement, canvas2DContext, carNames, carProgress) => {
+const drawCanvas = (canvasElement, canvas2DContext, carNames, carProgress, totalRounds) => {
   const { width: canvasWidth, height: canvasHeight } = canvasElement.getBoundingClientRect();
 
   const centerX = canvasWidth / 2;
@@ -68,14 +70,19 @@ const drawCanvas = (canvasElement, canvas2DContext, carNames, carProgress) => {
   const carGap = sx(CARS.GAP);
   const carNameFontSize = sy(CARS.NAME_FONT_SIZE);
 
-  const stepY = sy(CARS.STEP_Y);
+  const cellHeight = baseCarAreaY - goalLineY - sy(10);
+  const steps = totalRounds;
+  const stepY = cellHeight / steps;
+
   const names = carNames;
 
   CARS.SOURCES.forEach((src, index) => {
     const carCenterX = centerX + (index - 1) * carGap;
 
     const progress = carProgress[index] || 0;
-    const carCenterY = baseCarAreaY - stepY * progress;
+    const clampedProgress = Math.min(progress, steps);
+    const carCenterY = baseCarAreaY - stepY * clampedProgress;
+
     const carImage = new Image();
     carImage.src = src;
 
