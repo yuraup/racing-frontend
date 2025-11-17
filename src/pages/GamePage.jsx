@@ -16,10 +16,14 @@ export default function GamePage() {
   const config = location.state;
 
   const [modalStep, setModalStep] = useState(MODAL_STEP.RANDOM);
+
   const [cards] = useState(() => (config ? generateRandomCards(config.roundNumber) : []));
   const [selectedCard, setSelectedCard] = useState(null);
   const [roundResult, setRoundResult] = useState(null);
 
+  const carCount = config?.carNumber;
+  const [carProgress, setCarProgress] = useState(() => Array(carCount).fill(0));
+  const [winnerCarIndex, setWinnerCarIndex] = useState(null);
   const [myWins, setMyWins] = useState(0);
 
   useEffect(() => {
@@ -40,13 +44,22 @@ export default function GamePage() {
 
   const handleSelectCard = card => {
     setSelectedCard(card);
-    const result = Math.random() > 0.5 ? 'WIN' : 'LOSE';
-    setRoundResult(result);
+    const winnerIndex = Math.floor(Math.random() * carCount);
+    const isPlayerWin = winnerIndex === PLAYER_CAR_INDEX;
+    setWinnerCarIndex(winnerIndex);
+    setRoundResult(isPlayerWin ? 'WIN' : 'LOSE');
+
     setModalStep(MODAL_STEP.RESULT);
   };
 
   const hanldeConfirmResult = () => {
     setModalStep(MODAL_STEP.HIDDEN);
+
+    if (winnerCarIndex !== null) {
+      setCarProgress(prev =>
+        prev.map((step, index) => (index === winnerCarIndex ? step + 1 : step))
+      );
+    }
 
     if (roundResult === 'WIN') {
       setMyWins(prev => prev + 1);
@@ -69,7 +82,7 @@ export default function GamePage() {
           onConfirm={hanldeConfirmResult}
         />
       )}
-      <GameCanvas carNames={carNames} />
+      <GameCanvas carProgress={carProgress} carNames={carNames} />
     </div>
   );
 }

@@ -11,7 +11,7 @@ import { COLORS } from '../constants/canvas/canvasColors';
  * @param {CanvasRenderingContext2D} canvas2DContext - 2D 렌더링 컨텍스트
  * @param {string []} carNames - 각 자동차 이름
  */
-const drawCanvas = (canvasElement, canvas2DContext, carNames) => {
+const drawCanvas = (canvasElement, canvas2DContext, carNames, carProgress) => {
   const { width: canvasWidth, height: canvasHeight } = canvasElement.getBoundingClientRect();
 
   const centerX = canvasWidth / 2;
@@ -62,17 +62,20 @@ const drawCanvas = (canvasElement, canvas2DContext, carNames) => {
   canvas2DContext.fillRect(startLineX, startLineY, startLineWidth, startLineHeight);
 
   // 자동차
-  const carAreaY = startLineY + sy(CARS.TOP_GAP);
+  const baseCarAreaY = startLineY + sy(CARS.TOP_GAP);
   const carWidth = sx(CARS.WIDTH);
   const carHeight = sy(CARS.HEIGHT);
   const carGap = sx(CARS.GAP);
-
   const carNameFontSize = sy(CARS.NAME_FONT_SIZE);
+
+  const stepY = sy(CARS.STEP_Y);
   const names = carNames;
 
   CARS.SOURCES.forEach((src, index) => {
     const carCenterX = centerX + (index - 1) * carGap;
 
+    const progress = carProgress[index] || 0;
+    const carCenterY = baseCarAreaY - stepY * progress;
     const carImage = new Image();
     carImage.src = src;
 
@@ -80,7 +83,7 @@ const drawCanvas = (canvasElement, canvas2DContext, carNames) => {
       canvas2DContext.drawImage(
         carImage,
         carCenterX - carWidth / 2,
-        carAreaY - carHeight / 2,
+        carCenterY - carHeight / 2,
         carWidth,
         carHeight
       );
@@ -92,7 +95,7 @@ const drawCanvas = (canvasElement, canvas2DContext, carNames) => {
       canvas2DContext.fillText(
         names[index],
         carCenterX,
-        carAreaY + carHeight / 2 + sy(CARS.NAME_TOP_GAP)
+        carCenterY + carHeight / 2 + sy(CARS.NAME_TOP_GAP)
       );
     };
   });
