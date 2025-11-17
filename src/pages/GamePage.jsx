@@ -7,6 +7,8 @@ import SelectModal from '../components/modals/SelectModal';
 import ResultModal from '../components/modals/ResultModal';
 import GameHeader from '../components/game/GameHeader';
 
+import { moveAnimation } from '../utils/game/moveAnimation';
+
 import { MODAL_STEP } from '../constants/modalStep';
 import { PLAYER_CAR_INDEX } from '../constants/player';
 import { CARS } from '../constants/canvas/canvasCars';
@@ -68,26 +70,11 @@ export default function GamePage() {
       );
     }
 
-    const duration = 1000;
-    const startTime = performance.now();
-
-    if (winnerCarIndex === null) return;
-
-    const from = animatedProgress[winnerCarIndex];
-    const to = from + 1;
-
-    const animate = now => {
-      const elapsed = now - startTime;
-      const time = Math.min(1, elapsed / duration);
-
-      const eased = time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time;
-
-      setAnimatedProgress(prev =>
-        prev.map((value, index) => (index === winnerCarIndex ? from + (to - from) * eased : value))
-      );
-      if (time < 1) requestAnimationFrame(animate);
-    };
-    requestAnimationFrame(animate);
+    moveAnimation({
+      winnerCarIndex,
+      animatedProgress,
+      setAnimatedProgress,
+    });
 
     if (roundResult === 'WIN') {
       setMyWins(prev => prev + 1);
