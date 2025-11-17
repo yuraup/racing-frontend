@@ -2,7 +2,7 @@ import Modal from './Modal';
 import Button from '../../components/common/Button';
 import { RESULT_TEXT } from '../../constants/result';
 
-function ResultModal({ round, selectedCard, result, onComfirm }) {
+function ResultModal({ round, selectedCard, result, onConfirm }) {
   const resultLabel = RESULT_TEXT[result];
   return (
     <Modal>
@@ -17,7 +17,7 @@ function ResultModal({ round, selectedCard, result, onComfirm }) {
           <p className="text-ink">삼김에는국물: 40</p>
         </div>
         <p className="font-basic text-neon text-stroke-navy text-3xl font-bold">{resultLabel}</p>
-        <Button type="button" onClick={onComfirm} className="h-10 w-52">
+        <Button type="button" onClick={onConfirm} className="z-100 h-10 w-52">
           확인
         </Button>
       </div>
