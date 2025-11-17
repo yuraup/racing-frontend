@@ -1,13 +1,13 @@
 import Modal from './Modal';
 
-function SelectModal({ cards, onSelectCard }) {
+function SelectModal({ round, cards, onSelectCard }) {
   return (
     <Modal>
       <div
         className="relative flex w-full flex-col items-center justify-start gap-6 px-4 py-6"
         onClick={e => e.stopPropagation()}
       >
-        <p className="font-basic text-pink text-stroke-white text-2xl font-bold">Round 1</p>
+        <p className="font-basic text-pink text-stroke-white text-2xl font-bold">Round {round}</p>
         <p className="font-basic text-ink text-base font-medium">사용할 숫자를 선택하세요</p>
 
         <div className="flex flex-wrap justify-center gap-2">
