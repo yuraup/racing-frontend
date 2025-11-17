@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import generateRandomCards from '../utils/generateRandomCards';
 import GameCanvas from '../components/game/GameCanvas';
 import RandomModal from '../components/modals/RandomModal';
 import SelectModal from '../components/modals/SelectModal';
 import ResultModal from '../components/modals/ResultModal';
-import { MODAL_STEP } from '../constants/modalStep';
 import GameHeader from '../components/game/GameHeader';
+import { MODAL_STEP } from '../constants/modalStep';
+import { PLAYER_CAR_INDEX } from '../constants/player';
+import { CARS } from '../constants/canvas/canvasCars';
 
 export default function GamePage() {
   const location = useLocation();
@@ -25,6 +27,12 @@ export default function GamePage() {
       navigate('/setup');
     }
   }, [config, navigate]);
+
+  const carNames = useMemo(() => {
+    const names = [...CARS.NAMES];
+    names[PLAYER_CAR_INDEX] = config.carName;
+    return names;
+  }, [config.carName]);
 
   const handleGoSelect = () => {
     setModalStep(MODAL_STEP.SELECT);
@@ -54,13 +62,14 @@ export default function GamePage() {
       )}
       {modalStep === MODAL_STEP.RESULT && (
         <ResultModal
+          myName={config.carName}
           round={1}
           selectedCard={selectedCard}
           result={roundResult}
           onConfirm={hanldeConfirmResult}
         />
       )}
-      <GameCanvas />
+      <GameCanvas carNames={carNames} />
     </div>
   );
 }

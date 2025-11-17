@@ -1,6 +1,6 @@
 export const CARS = {
   SOURCES: ['/assets/mintcar.png', '/assets/usercar.png', '/assets/purplecar.png'],
-  NAMES: ['참지마요짱', '유저 자동차', '삼김에는극물'],
+  NAMES: ['참지마요짱', '', '삼김에는극물'],
 
   WIDTH: 54,
   HEIGHT: 57,

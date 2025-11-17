@@ -9,8 +9,9 @@ import { COLORS } from '../constants/canvas/canvasColors';
  * BASE_WIDTH와 HEIGHT 비율을 기준으로 sx, sy로 스케일링
  * @param {HTMLCanvasElement} canvasElement - 실제 DOM 캔버스 요소
  * @param {CanvasRenderingContext2D} canvas2DContext - 2D 렌더링 컨텍스트
+ * @param {string []} carNames - 각 자동차 이름
  */
-const drawCanvas = (canvasElement, canvas2DContext) => {
+const drawCanvas = (canvasElement, canvas2DContext, carNames) => {
   const { width: canvasWidth, height: canvasHeight } = canvasElement.getBoundingClientRect();
 
   const centerX = canvasWidth / 2;
@@ -67,6 +68,7 @@ const drawCanvas = (canvasElement, canvas2DContext) => {
   const carGap = sx(CARS.GAP);
 
   const carNameFontSize = sy(CARS.NAME_FONT_SIZE);
+  const names = carNames;
 
   CARS.SOURCES.forEach((src, index) => {
     const carCenterX = centerX + (index - 1) * carGap;
@@ -88,7 +90,7 @@ const drawCanvas = (canvasElement, canvas2DContext) => {
       canvas2DContext.textAlign = 'center';
       canvas2DContext.textBaseline = 'top';
       canvas2DContext.fillText(
-        CARS.NAMES[index],
+        names[index],
         carCenterX,
         carAreaY + carHeight / 2 + sy(CARS.NAME_TOP_GAP)
       );
