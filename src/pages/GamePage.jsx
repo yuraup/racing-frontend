@@ -5,9 +5,11 @@ import GameCanvas from '../components/game/GameCanvas';
 import RandomModal from '../components/modals/RandomModal';
 import SelectModal from '../components/modals/SelectModal';
 import ResultModal from '../components/modals/ResultModal';
+import FinalModal from '../components/modals/finalModal';
 import GameHeader from '../components/game/GameHeader';
 
 import { moveAnimation } from '../utils/game/moveAnimation';
+import { getFinalResult } from '../utils/calculation/getFinalResult';
 
 import { MODAL_STEP } from '../constants/modalStep';
 import { PLAYER_CAR_INDEX } from '../constants/player';
@@ -32,6 +34,8 @@ export default function GamePage() {
   const [animatedProgress, setAnimatedProgress] = useState(() => Array(totalCars).fill(0));
   const [winnerCarIndex, setWinnerCarIndex] = useState(null);
   const [myWins, setMyWins] = useState(0);
+
+  const [finalIsPlayerWin, setFinalIsPlayerWin] = useState(null);
 
   useEffect(() => {
     if (!config) {
@@ -65,9 +69,25 @@ export default function GamePage() {
     setModalStep(MODAL_STEP.HIDDEN);
 
     if (winnerCarIndex !== null) {
-      setCarProgress(prev =>
-        prev.map((step, index) => (index === winnerCarIndex ? step + 1 : step))
-      );
+      setCarProgress(prev => {
+        const updated = prev.map((step, index) => (index === winnerCarIndex ? step + 1 : step));
+
+        if (currentRound === totalrounds) {
+          setTimeout(() => {
+            const finalResult = getFinalResult(updated);
+            setFinalIsPlayerWin(finalResult);
+            setModalStep(MODAL_STEP.FINAL);
+          }, 2000);
+        }
+
+        return updated;
+      });
+    } else if (currentRound === totalrounds) {
+      setTimeout(() => {
+        const finalResult = getFinalResult(carProgress);
+        setFinalIsPlayerWin(finalResult);
+        setModalStep(MODAL_STEP.FINAL);
+      }, 2000);
     }
 
     moveAnimation({
@@ -81,16 +101,6 @@ export default function GamePage() {
     }
 
     if (currentRound === totalrounds) {
-      setTimeout(() => {
-        navigate('/result', {
-          state: {
-            totalrounds,
-            myWins,
-            carProgress,
-          },
-        });
-      }, 2000);
-
       return;
     }
 
@@ -125,6 +135,7 @@ export default function GamePage() {
           onConfirm={hanldeConfirmResult}
         />
       )}
+      {modalStep === MODAL_STEP.FINAL && <FinalModal finalIsPlayerWin={finalIsPlayerWin} />}
       <GameCanvas carProgress={animatedProgress} carNames={carNames} totalRounds={totalrounds} />
     </div>
   );

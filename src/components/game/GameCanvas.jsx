@@ -13,7 +13,7 @@ function GameCanvas({ carProgress, carNames, totalRounds }) {
 
   return (
     <div className="w-full flex-1">
-      <canvas ref={canvasRef} className="h-full w-full rounded-2xl shadow-lg" />
+      <canvas ref={canvasRef} className="h-full w-full shadow-lg md:rounded-2xl" />
     </div>
   );
 }
