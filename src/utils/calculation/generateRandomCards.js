@@ -1,4 +1,4 @@
-import { RANDOM_MIN_NUMBER, RANDOM_MAX_NUMBER } from '../constants/RuleNumbers';
+import { RANDOM_MIN_NUMBER, RANDOM_MAX_NUMBER } from '../../constants/RuleNumbers';
 
 export default function generateRandomCards(
   count,

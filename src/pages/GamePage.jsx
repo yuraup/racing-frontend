@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import generateRandomCards from '../utils/generateRandomCards';
+import generateRandomCards from '../utils/calculation/generateRandomCards';
 import GameCanvas from '../components/game/GameCanvas';
 import RandomModal from '../components/modals/RandomModal';
 import SelectModal from '../components/modals/SelectModal';
@@ -46,8 +46,9 @@ export default function GamePage() {
   const carNames = useMemo(() => {
     const names = [...CARS.NAMES];
     names[PLAYER_CAR_INDEX] = config.carName;
-    return names;
-  }, [config.carName]);
+
+    return names.slice(0, totalCars);
+  }, [config.carName, totalCars]);
 
   const handleGoSelect = () => {
     setModalStep(MODAL_STEP.SELECT);
