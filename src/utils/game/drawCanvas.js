@@ -1,8 +1,8 @@
-import { BASE_WIDTH, BASE_HEIGHT } from '../constants/canvas/canvasBase';
-import { GOAL } from '../constants/canvas/canvasGoal';
-import { START } from '../constants/canvas/canvasStart';
-import { CARS } from '../constants/canvas/canvasCars';
-import { COLORS } from '../constants/canvas/canvasColors';
+import { BASE_WIDTH, BASE_HEIGHT } from '../../constants/canvas/canvasBase';
+import { GOAL } from '../../constants/canvas/canvasGoal';
+import { START } from '../../constants/canvas/canvasStart';
+import { CARS } from '../../constants/canvas/canvasCars';
+import { COLORS } from '../../constants/canvas/canvasColors';
 
 /**
  * 캔버스 크기로 게임 화면 그리는 함수
@@ -74,10 +74,12 @@ const drawCanvas = (canvasElement, canvas2DContext, carNames, carProgress, total
   const steps = totalRounds;
   const stepY = cellHeight / steps;
 
-  const names = carNames;
+  const carCount = carNames.length;
+  for (let index = 0; index < carCount; index++) {
+    const src = CARS.SOURCES[index];
 
-  CARS.SOURCES.forEach((src, index) => {
-    const carCenterX = centerX + (index - 1) * carGap;
+    const offset = index - (carCount - 1) / 2;
+    const carCenterX = centerX + offset * carGap;
 
     const progress = carProgress[index] || 0;
     const clampedProgress = Math.min(progress, steps);
@@ -100,12 +102,12 @@ const drawCanvas = (canvasElement, canvas2DContext, carNames, carProgress, total
       canvas2DContext.textAlign = 'center';
       canvas2DContext.textBaseline = 'top';
       canvas2DContext.fillText(
-        names[index],
+        carNames[index],
         carCenterX,
         carCenterY + carHeight / 2 + sy(CARS.NAME_TOP_GAP)
       );
     };
-  });
+  }
 };
 
 export default drawCanvas;
