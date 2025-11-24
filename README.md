@@ -8,6 +8,9 @@
 
 **콘솔 로직 -> REST API -> Canvas UI**로 재구상한 프로젝트입니다.
 
+디자인은 Figma로 시안을 만들었습니다.  
+[Figma 링크 바로가기](https://www.figma.com/design/s34tV2r2CH1KWIKwQ6gOaP/%EB%A0%88%EC%9D%B4%EC%8B%B1%EA%B2%8C%EC%9E%84?node-id=0-1&t=YRV3N1bQWS2i5qb0-1)
+
 ### 📌 프로젝트 목표
 
 이 프로젝트의 핵심 목표는 우테코 프리 코스 동안 배운 **도메인 중심 사고 + 테스트 가능한 구조 + UI/렌더링 분리** 복습입니다.
