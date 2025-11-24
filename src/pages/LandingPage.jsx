@@ -9,6 +9,16 @@ export const LandingPage = () => {
 
   const [openGuide, setOpenGuide] = useState(false);
 
+  const handleStartClick = () => {
+    const audio = document.getElementById('bgm-audio');
+    if (audio && 'play' in audio) {
+      audio.play().catch(e => {
+        console.warn('BGM 재생 실패:', e);
+      });
+    }
+    navigate('/setup');
+  };
+
   const handleGuideClick = () => {
     setOpenGuide(true);
   };
@@ -31,7 +41,7 @@ export const LandingPage = () => {
           <button
             type="button"
             className="font-basic hover-text-shadow-pink active-text-shadow-pink text-3xl font-light text-white"
-            onClick={() => navigate('/setup')}
+            onClick={handleStartClick}
           >
             start
           </button>
