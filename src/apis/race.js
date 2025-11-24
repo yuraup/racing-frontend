@@ -5,6 +5,14 @@ export const api = axios.create({
   baseURL: BASE_URL,
 });
 
+api.interceptors.request.use(config => {
+  if (config.baseURL?.includes('ngrok-free.dev')) {
+    config.headers = config.headers || {};
+    config.headers['ngrok-skip-browser-warning'] = '69420';
+  }
+  return config;
+});
+
 export const createRace = data => api.post('/api/races', data).then(res => res.data);
 
 export const distributeCards = raceId => api.post(`/api/races/${raceId}/hands`);
