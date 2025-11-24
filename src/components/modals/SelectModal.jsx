@@ -18,7 +18,9 @@ function SelectModal({ round, cards, usedCards, onSelectCard }) {
                 key={card}
                 type="button"
                 onClick={() => !isDisabled && onSelectCard(card)}
-                className={`relative flex flex-col items-center ${isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                className={`relative flex flex-col items-center ${
+                  isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'
+                }`}
               >
                 <img
                   src={isDisabled ? '/assets/disabled.png' : '/assets/card.png'}
