@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion as Motion } from 'framer-motion';
 import { FiHelpCircle } from 'react-icons/fi';
 import { useState } from 'react';
-import GuideModal from '../components/modals/guideModal';
+import GuideModal from '../components/modals/GuideModal';
 
 export const LandingPage = () => {
   const navigate = useNavigate();
