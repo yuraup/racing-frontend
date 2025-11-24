@@ -35,6 +35,7 @@ export default function GamePage() {
     myWins,
     carNames,
     animatedProgress,
+    finalResult,
     handleRandomClick,
     handleSelectCard,
     handleConfirmResult,
@@ -73,9 +74,7 @@ export default function GamePage() {
           />
         )}
 
-        {modalStep === MODAL_STEP.FINAL && (
-          <FinalModal key="final" raceId={config.raceId} myName={config.carName} />
-        )}
+        {modalStep === MODAL_STEP.FINAL && <FinalModal key="final" result={finalResult} />}
       </AnimatePresence>
 
       <GameCanvas carProgress={animatedProgress} carNames={carNames} totalRounds={totalRounds} />
