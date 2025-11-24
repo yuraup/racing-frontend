@@ -1,0 +1,9 @@
+export const START = {
+  TEXT: 'START',
+  FONT_SIZE: 34,
+  TEXT_GAP_FROM_GOAL_LINE: 370,
+
+  LINE_WIDTH: 200,
+  LINE_HEIGHT: 9,
+  LINE_GAP: 30,
+};
