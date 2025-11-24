@@ -1,8 +1,18 @@
-import { motion as Motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { motion as Motion } from 'framer-motion';
+import { FiHelpCircle } from 'react-icons/fi';
+import { useState } from 'react';
+import GuideModal from '../components/modals/guideModal';
 
 export const LandingPage = () => {
   const navigate = useNavigate();
+
+  const [openGuide, setOpenGuide] = useState(false);
+
+  const handleGuideClick = () => {
+    setOpenGuide(true);
+  };
+
   return (
     <Motion.div
       initial={{ opacity: 0, y: 0 }}
@@ -24,6 +34,15 @@ export const LandingPage = () => {
             onClick={() => navigate('/setup')}
           >
             start
+          </button>
+          <button
+            type="button"
+            onClick={handleGuideClick}
+            className="group font-basic hover-text-shadow-pink active-text-shadow-pink flex items-center gap-1 px-3 py-1 text-sm font-light text-white"
+          >
+            <FiHelpCircle className="group-hover:text-pink h-4 w-4 transition-transform group-hover:scale-110 group-active:scale-95 group-active:text-pink-500" />
+            <span>게임 방법</span>
+            {openGuide && <GuideModal onClose={() => setOpenGuide(false)} />}
           </button>
         </div>
       </div>
