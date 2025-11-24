@@ -3,7 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import { LandingPage } from './pages/LandingPage';
 import SetUpPage from './pages/SetUpPage';
 import GamePage from './pages/GamePage';
-import BgmPlayer from './components/music/bgmPlayer';
+import BgmPlayer from './components/music/BgmPlayer';
 
 export default function App() {
   const location = useLocation();
