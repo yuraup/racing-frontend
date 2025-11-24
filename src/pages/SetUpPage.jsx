@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { createRace } from '../apis/race';
 import Button from '../components/common/Button';
 import { MIN_CAR, MAX_CAR, MIN_ROUND, MAX_ROUND, MAX_NAME_LENGTH } from '../constants/setUpNumbers';
-import { useNavigate } from 'react-router-dom';
 
 export default function SetUpPage() {
   const [carNumber, setCarNumber] = useState(1);
@@ -34,15 +35,29 @@ export default function SetUpPage() {
     }
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    navigate('/game', {
-      state: {
-        carNumber,
-        roundNumber,
-        carName,
-      },
-    });
+
+    try {
+      const body = {
+        totalRounds: roundNumber,
+        botNumbers: carNumber,
+        playerName: carName,
+      };
+
+      const raceId = await createRace(body);
+
+      navigate('/game', {
+        state: {
+          raceId,
+          carNumber,
+          roundNumber,
+          carName,
+        },
+      });
+    } catch (error) {
+      console.error('레이스 생성 중 에러:', error);
+    }
   };
 
   return (
