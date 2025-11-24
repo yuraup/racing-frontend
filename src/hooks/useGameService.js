@@ -1,10 +1,4 @@
-import {
-  distributeCards,
-  getPlayerHand,
-  submitCard,
-  judgeRound,
-  getRaceStatus,
-} from '../apis/race';
+import { distributeCards, getPlayerHand, submitCard, judgeRound } from '../apis/race';
 import { PLAYER_ID } from '../constants/player';
 
 export function useGameService() {
@@ -26,14 +20,8 @@ export function useGameService() {
     return result;
   };
 
-  const fetchStatus = async raceId => {
-    const status = await getRaceStatus(raceId);
-    return status;
-  };
-
   return {
     dealCards,
     playRound,
-    fetchStatus,
   };
 }

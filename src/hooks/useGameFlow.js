@@ -6,6 +6,7 @@ import { PLAYER_CAR_INDEX } from '../constants/player';
 import { CARS } from '../constants/canvas/canvasCars';
 import { ANIMATION_DELAY } from '../constants/canvas/animation';
 import { moveAnimation } from '../utils/game/moveAnimation';
+import { getFinalResult } from '../utils/calculation/getFinalResult';
 
 export function useGameFlow(config) {
   const { dealCards, playRound } = useGameService();
@@ -29,13 +30,17 @@ export function useGameFlow(config) {
   const [carProgress, setCarProgress] = useState(() => Array(totalCars).fill(0));
   const [animatedProgress, setAnimatedProgress] = useState(() => Array(totalCars).fill(0));
 
+  const [finalResult, setFinalResult] = useState(null);
+
   const carNames = useMemo(() => {
-    const names = [...CARS.NAMES];
-    if (playerName) {
-      names[PLAYER_CAR_INDEX] = playerName;
+    const baseNames = CARS.NAMES.slice(0, totalCars);
+
+    if (playerName && PLAYER_CAR_INDEX < baseNames.length) {
+      baseNames[PLAYER_CAR_INDEX] = playerName;
     }
-    return names;
-  }, [playerName]);
+
+    return baseNames;
+  }, [playerName, totalCars]);
 
   // 랜덤 카드 뽑기
   const handleRandomClick = async () => {
@@ -92,9 +97,17 @@ export function useGameFlow(config) {
     setModalStep(MODAL_STEP.HIDDEN);
 
     if (winnerCarIndex !== null) {
-      setCarProgress(prev =>
-        prev.map((step, index) => (index === winnerCarIndex ? step + 1 : step))
-      );
+      setCarProgress(prev => {
+        const updated = prev.map((step, index) => (index === winnerCarIndex ? step + 1 : step));
+
+        if (currentRound === totalRounds) {
+          setFinalResult(getFinalResult(updated));
+        }
+
+        return updated;
+      });
+    } else if (currentRound === totalRounds) {
+      setFinalResult(getFinalResult(carProgress));
     }
 
     moveAnimation({
@@ -133,6 +146,7 @@ export function useGameFlow(config) {
     carNames,
     carProgress,
     animatedProgress,
+    finalResult,
 
     handleRandomClick,
     handleSelectCard,
