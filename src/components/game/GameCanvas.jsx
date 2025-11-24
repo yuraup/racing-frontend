@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import useCanvas from '../../hooks/useCanvas';
-import drawCanvas from '../../utils/drawCanvas';
+import drawCanvas from '../../utils/game/drawCanvas';
 
 function GameCanvas({ carProgress, carNames, totalRounds }) {
   const draw = useCallback(

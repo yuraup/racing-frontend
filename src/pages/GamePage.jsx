@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
 import GameCanvas from '../components/game/GameCanvas';
 import RandomModal from '../components/modals/RandomModal';
 import SelectModal from '../components/modals/SelectModal';
