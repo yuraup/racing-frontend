@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+
 import GameCanvas from '../components/game/GameCanvas';
 import RandomModal from '../components/modals/RandomModal';
 import SelectModal from '../components/modals/SelectModal';
@@ -46,31 +48,35 @@ export default function GamePage() {
     <div className="flex h-full w-full flex-col">
       <GameHeader myWins={myWins} />
 
-      {modalStep === MODAL_STEP.RANDOM && <RandomModal onNext={handleRandomClick} />}
+      <AnimatePresence>
+        {modalStep === MODAL_STEP.RANDOM && <RandomModal key="random" onNext={handleRandomClick} />}
 
-      {modalStep === MODAL_STEP.SELECT && (
-        <SelectModal
-          round={currentRound}
-          cards={cards}
-          usedCards={usedCards}
-          onSelectCard={handleSelectCard}
-        />
-      )}
+        {modalStep === MODAL_STEP.SELECT && (
+          <SelectModal
+            key="select"
+            round={currentRound}
+            cards={cards}
+            usedCards={usedCards}
+            onSelectCard={handleSelectCard}
+          />
+        )}
 
-      {modalStep === MODAL_STEP.RESULT && (
-        <ResultModal
-          myName={config.carName}
-          round={currentRound}
-          selectedCard={selectedCard}
-          bots={roundBots}
-          result={roundResult}
-          onConfirm={handleConfirmResult}
-        />
-      )}
+        {modalStep === MODAL_STEP.RESULT && (
+          <ResultModal
+            key="result"
+            myName={config.carName}
+            round={currentRound}
+            selectedCard={selectedCard}
+            bots={roundBots}
+            result={roundResult}
+            onConfirm={handleConfirmResult}
+          />
+        )}
 
-      {modalStep === MODAL_STEP.FINAL && (
-        <FinalModal raceId={config.raceId} myName={config.carName} />
-      )}
+        {modalStep === MODAL_STEP.FINAL && (
+          <FinalModal key="final" raceId={config.raceId} myName={config.carName} />
+        )}
+      </AnimatePresence>
 
       <GameCanvas carProgress={animatedProgress} carNames={carNames} totalRounds={totalRounds} />
     </div>
